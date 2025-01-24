@@ -65,8 +65,8 @@ const IndexPage = () => {
         style={{ padding: '10px', width: '300px', marginBottom: '20px' }}
       />
 
-      {loading && <p>{formatMessage({ id: 'loading' })}</p>}
-      {error && <p style={{ color: 'red' }}>{formatMessage({ id: 'error' })}: {error}</p>}
+      {loading && <p style={{ color: 'white', textAlign: 'center' }}>{formatMessage({ id: 'loading' })}</p>}
+      {error && <p style={{ color: 'red', textAlign: 'center' }}>{formatMessage({ id: 'error' })}: {error}</p>}
 
       {!loading && !error && (
         <div>
@@ -81,7 +81,7 @@ const IndexPage = () => {
                 </li>
               ))
             ) : (
-              <p>{formatMessage({ id: 'noResults' })}</p>
+              <p style={{ color: 'white' }}>{formatMessage({ id: 'noResults' })}</p>
             )}
           </ul>
 

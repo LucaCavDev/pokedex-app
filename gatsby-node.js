@@ -5,9 +5,11 @@ exports.createPages = async ({ actions }) => {
   const pokemonTemplate = require.resolve(`./src/templates/PokemonPage.js`);
 
   try {
+    // Fetch list of Pokémon (first 151)
     const response = await axios.get('https://pokeapi.co/api/v2/pokemon-species?limit=151');
     const pokemonList = response.data.results;
 
+    // Loop through each Pokémon and fetch more detailed information
     for (const pokemon of pokemonList) {
       const details = await axios.get(pokemon.url);
       const pokemonData = details.data;
@@ -22,12 +24,13 @@ exports.createPages = async ({ actions }) => {
 
       // Extract genus for all supported languages
       const genus = {};
-      pokemonData.genus.forEach((entry) => {
+      pokemonData.genera.forEach((entry) => {
         if (['en', 'fr', 'it', 'es'].includes(entry.language.name)) {
-          genus[entry.language.name] = entry.genus;
+          genus[entry.language.name] = entry.genus; // Store genus in appropriate language
         }
       });
 
+      // Create the page for each Pokémon
       createPage({
         path: `/pokemon/${pokemonData.id}`,
         component: pokemonTemplate,
@@ -35,8 +38,8 @@ exports.createPages = async ({ actions }) => {
           id: pokemonData.id,
           name: pokemonData.names.find((n) => n.language.name === 'en').name, // Default to English name
           genus: genus,  // Store all genus translations
-          descriptions,
-          imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonData.id}.png`,
+          descriptions,   // Store all descriptions in different languages
+          imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonData.id}.png`, // Pokémon image URL
         },
       });
     }
