@@ -57,3 +57,10 @@ npm run develop
 
 ### 4. View the site
 Open your browser and navigate to http://localhost:8000 to see the Pokedex Web App running locally.
+
+
+
+## Deployed Website
+```bash
+https://pokedex-app-five-drab.vercel.app/
+```
