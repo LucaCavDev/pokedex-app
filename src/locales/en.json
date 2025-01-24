@@ -1,0 +1,10 @@
+{
+    "title": "Pokedex",
+    "searchPlaceholder": "Search Pokemon...",
+    "loading": "Loading Pokémon...",
+    "error": "Error fetching Pokémon data",
+    "noResults": "No Pokémon found",
+    "description": "Description",
+    "genus": "Genus",
+    "id": "ID"
+}

@@ -1,0 +1,10 @@
+{
+    "title": "Pokédex",
+    "searchPlaceholder": "Chercher Pokémon...",
+    "loading": "Chargement des Pokémon...",
+    "error": "Erreur lors du chargement des données Pokémon",
+    "noResults": "Aucun Pokémon trouvé",
+    "description": "Description",
+    "genus": "Genre",
+    "id": "ID"
+}

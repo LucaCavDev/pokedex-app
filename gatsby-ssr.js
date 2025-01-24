@@ -1,12 +1,12 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/
- */
+import React from 'react';
+import { IntlProvider } from 'react-intl';
+import en from './src/locales/en.json';
+import it from './src/locales/it.json';
+import fr from './src/locales/fr.json';
+import es from './src/locales/es.json';
 
-/**
- * @type {import('gatsby').GatsbySSR['onRenderBody']}
- */
-exports.onRenderBody = ({ setHtmlAttributes }) => {
-  setHtmlAttributes({ lang: `en` })
-}
+const messages = { en, it, fr, es };
+
+export const wrapRootElement = ({ element }) => {
+  return <IntlProvider locale="en" messages={messages.en}>{element}</IntlProvider>;
+};

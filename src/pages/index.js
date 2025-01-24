@@ -1,128 +1,104 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import React, { useState, useEffect } from 'react';
+import { Link } from 'gatsby';
+import { useIntl } from 'react-intl';
+import ReactPaginate from 'react-paginate';
+import '../styles/pagination.scss';
 
-import Layout from "../components/layout"
-import Seo from "../components/seo"
-import * as styles from "../components/index.module.css"
+const IndexPage = () => {
+  const [pokemonList, setPokemonList] = useState([]);
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 20;
+  const { formatMessage } = useIntl();
 
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-  },
-  {
-    text: "Examples",
-    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
-    description:
-      "A collection of websites ranging from very basic to complex/complete that illustrate how to accomplish specific tasks within your Gatsby sites.",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Learn how to add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-  },
-]
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      try {
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+        if (!response.ok) {
+          throw new Error('Failed to fetch Pokémon data');
+        }
+        const data = await response.json();
+        setPokemonList(
+          data.results.map((pokemon, index) => ({
+            id: index + 1,
+            name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+            imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
+          }))
+        );
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
 
-const samplePageLinks = [
-  {
-    text: "Page 2",
-    url: "page-2",
-    badge: false,
-    description:
-      "A simple example of linking to another page within a Gatsby site",
-  },
-  { text: "TypeScript", url: "using-typescript" },
-  { text: "Server Side Rendering", url: "using-ssr" },
-  { text: "Deferred Static Generation", url: "using-dsg" },
-]
+    fetchPokemon();
+  }, []);
 
-const moreLinks = [
-  { text: "Join us on Discord", url: "https://gatsby.dev/discord" },
-  {
-    text: "Documentation",
-    url: "https://gatsbyjs.com/docs/",
-  },
-  {
-    text: "Starters",
-    url: "https://gatsbyjs.com/starters/",
-  },
-  {
-    text: "Showcase",
-    url: "https://gatsbyjs.com/showcase/",
-  },
-  {
-    text: "Contributing",
-    url: "https://www.gatsbyjs.com/contributing/",
-  },
-  { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
-]
+  // Filter the list based on search query
+  const filteredPokemon = pokemonList.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase())
+  );
 
-const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
+  // Pagination logic
+  const offset = currentPage * itemsPerPage;
+  const currentPokemon = filteredPokemon.slice(offset, offset + itemsPerPage);
 
-const IndexPage = () => (
-  <Layout>
-    <div className={styles.textCenter}>
-      <StaticImage
-        src="../images/example.png"
-        loading="eager"
-        width={64}
-        quality={95}
-        formats={["auto", "webp", "avif"]}
-        alt=""
-        style={{ marginBottom: `var(--space-3)` }}
+  // Handle page change
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <h1>{formatMessage({ id: 'title' })}</h1>
+      <input
+        type="text"
+        placeholder={formatMessage({ id: 'searchPlaceholder' })}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setCurrentPage(0); // Reset pagination when searching
+        }}
+        style={{ padding: '10px', width: '300px', marginBottom: '20px' }}
       />
-      <h1>
-        Welcome to <b>Gatsby!</b>
-      </h1>
-      <p className={styles.intro}>
-        <b>Example pages:</b>{" "}
-        {samplePageLinks.map((link, i) => (
-          <React.Fragment key={link.url}>
-            <Link to={link.url}>{link.text}</Link>
-            {i !== samplePageLinks.length - 1 && <> · </>}
-          </React.Fragment>
-        ))}
-        <br />
-        Edit <code>src/pages/index.js</code> to update this page.
-      </p>
+
+      {loading && <p>{formatMessage({ id: 'loading' })}</p>}
+      {error && <p style={{ color: 'red' }}>{formatMessage({ id: 'error' })}: {error}</p>}
+
+      {!loading && !error && (
+        <div>
+          <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {currentPokemon.length > 0 ? (
+              currentPokemon.map((pokemon) => (
+                <li key={pokemon.id} style={{ margin: '20px' }}>
+                  <Link to={`/pokemon/${pokemon.id}`}>
+                    <img src={pokemon.imageUrl} alt={pokemon.name} width="100" />
+                    <p>{pokemon.name}</p>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <p>{formatMessage({ id: 'noResults' })}</p>
+            )}
+          </ul>
+
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            pageCount={Math.ceil(filteredPokemon.length / itemsPerPage)}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            activeClassName={"active"}
+            disabledClassName={"disabled"}
+            breakLabel={"..."}
+          />
+        </div>
+      )}
     </div>
-    <ul className={styles.list}>
-      {links.map(link => (
-        <li key={link.url} className={styles.listItem}>
-          <a
-            className={styles.listItemLink}
-            href={`${link.url}${utmParameters}`}
-          >
-            {link.text} ↗
-          </a>
-          <p className={styles.listItemDescription}>{link.description}</p>
-        </li>
-      ))}
-    </ul>
-    {moreLinks.map((link, i) => (
-      <React.Fragment key={link.url}>
-        <a href={`${link.url}${utmParameters}`}>{link.text}</a>
-        {i !== moreLinks.length - 1 && <> · </>}
-      </React.Fragment>
-    ))}
-  </Layout>
-)
+  );
+};
 
-/**
- * Head export to define metadata for the page
- *
- * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
- */
-export const Head = () => <Seo title="Home" />
-
-export default IndexPage
+export default IndexPage;
