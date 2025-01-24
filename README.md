@@ -34,9 +34,26 @@ This is a **Pokedex** web app built with **Gatsby.js**, **React**, and **PokeAPI
 To run the **Pokedex Web App** locally, follow these steps:
 
 ### 1. Clone the repository
-
 First, clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/LucaCavDev/pokedex-app.git
 cd pokedex-app
+```
+
+### 2. Install dependencies
+Run the following command to install the project dependencies:
+
+```bash
+npm install
+```
+
+### 3. Start the development server
+Once the dependencies are installed, start the development server by running:
+
+```bash
+npm run develop
+```
+
+### 4. View the site
+Open your browser and navigate to http://localhost:8000 to see the Pokedex Web App running locally.
