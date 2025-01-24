@@ -1,21 +1,42 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import { Link } from 'gatsby';
 
 const PokemonPage = ({ pageContext }) => {
     const { id, name, genus, descriptions, imageUrl } = pageContext;
     const { locale, formatMessage } = useIntl();
 
-    // Get translated genus and description based on selected language
     const localizedGenus = genus[locale] || genus['en'];
     const localizedDescription = descriptions[locale] || descriptions['en'];
 
     return (
-        <div style={{ textAlign: 'center' }}>
-            <h1>{name}</h1>
-            <img src={imageUrl} alt={name} />
-            <p><strong>{formatMessage({ id: 'id' })}:</strong> {id}</p>
-            <p><strong>{formatMessage({ id: 'genus' })}:</strong> {localizedGenus}</p>
-            <p><strong>{formatMessage({ id: 'description' })}:</strong> {localizedDescription}</p>
+        <div className='pokemonDetails'>
+
+            <div>
+                <img src={imageUrl} alt={name} />
+                <h1>{id} - {name}</h1>
+
+                <h2>
+                    {formatMessage({ id: 'genus' })}
+                </h2>
+                <p>{localizedGenus}</p>
+                <h2>
+                    {formatMessage({ id: 'description' })}
+                </h2>
+                <p>{localizedDescription}</p>
+                <div>
+                    <Link to="/" style={{
+                        padding: '10px 20px',
+                        color: 'white',
+                        borderRadius: '5px',
+                        textAlign: 'center',
+                        display: 'inline-block',
+                        marginTop: '20px'
+                    }}>
+                        {formatMessage({ id: 'backToIndex' })}
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 };

@@ -1,10 +1,13 @@
 {
-    "title": "Pokédex",
+    "title": "Pokedex",
     "searchPlaceholder": "Buscar Pokémon...",
-    "loading": "Cargando Pokémon...",
-    "error": "Error al cargar los datos de Pokémon",
-    "noResults": "No se encontraron Pokémon",
-    "description": "Descripción",
+    "loading": "Cargando...",
+    "error": "Error",
+    "noResults": "No se encontraron resultados",
+    "id": "ID",
     "genus": "Género",
-    "id": "ID"
+    "description": "Descripción",
+    "previous": "← Anterior",
+    "next": "Siguiente →",
+    "backToIndex": "Volver al índice"
 }

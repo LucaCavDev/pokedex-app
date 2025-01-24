@@ -54,13 +54,13 @@ const IndexPage = () => {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1>{formatMessage({ id: 'title' })}</h1>
+      <h1 style={{ textTransform: 'uppercase', color: 'white' }}>{formatMessage({ id: 'title' })}</h1>
       <input
         type="text"
         placeholder={formatMessage({ id: 'searchPlaceholder' })}
         onChange={(e) => {
           setSearch(e.target.value);
-          setCurrentPage(0); // Reset pagination when searching
+          setCurrentPage(0);
         }}
         style={{ padding: '10px', width: '300px', marginBottom: '20px' }}
       />
@@ -70,13 +70,13 @@ const IndexPage = () => {
 
       {!loading && !error && (
         <div>
-          <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginLeft: '0px' }}>
             {currentPokemon.length > 0 ? (
               currentPokemon.map((pokemon) => (
-                <li key={pokemon.id} style={{ margin: '20px' }}>
-                  <Link to={`/pokemon/${pokemon.id}`}>
+                <li key={pokemon.id} style={{ margin: '20px', backgroundColor: 'white', borderRadius: '15px', padding: '20px' }}>
+                  <Link to={`/pokemon/${pokemon.id}`} style={{ textDecoration: 'none', color: 'blue' }}>
                     <img src={pokemon.imageUrl} alt={pokemon.name} width="100" />
-                    <p>{pokemon.name}</p>
+                    <p >{pokemon.name}</p>
                   </Link>
                 </li>
               ))
@@ -86,14 +86,15 @@ const IndexPage = () => {
           </ul>
 
           <ReactPaginate
-            previousLabel={"← Previous"}
-            nextLabel={"Next →"}
+            previousLabel={formatMessage({ id: 'previous' })}
+            nextLabel={formatMessage({ id: 'next' })}
             pageCount={Math.ceil(filteredPokemon.length / itemsPerPage)}
             onPageChange={handlePageClick}
             containerClassName={"pagination"}
             activeClassName={"active"}
             disabledClassName={"disabled"}
             breakLabel={"..."}
+            marginPagesDisplayed={0}
           />
         </div>
       )}

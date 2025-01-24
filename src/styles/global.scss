@@ -1,0 +1,60 @@
+body {
+    background-image: url('../images/wallpaper.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.multilanguageHeader {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 30px;
+}
+
+.multilanguageHeader button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+
+.multilanguageHeader button:hover {
+    transform: scale(1.5);
+}
+
+.pokemonDetails {
+    width: 50%;
+    padding: 0px 30px;
+    text-align: center;
+
+    h1 {
+        color: #FFC300;
+    }
+
+    h2 {
+        margin-bottom: 0;
+        color: #FF5733;
+    }
+
+
+    p {
+        color: white
+    }
+}
+
+@media (max-width: 768px) {
+    .pokemonDetails {
+        padding: 0px 30px;
+
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-top: 10vh;
+    }
+}

@@ -21,10 +21,10 @@ exports.createPages = async ({ actions }) => {
       });
 
       // Extract genus for all supported languages
-      const genera = {};
-      pokemonData.genera.forEach((entry) => {
+      const genus = {};
+      pokemonData.genus.forEach((entry) => {
         if (['en', 'fr', 'it', 'es'].includes(entry.language.name)) {
-          genera[entry.language.name] = entry.genus;
+          genus[entry.language.name] = entry.genus;
         }
       });
 
@@ -34,7 +34,7 @@ exports.createPages = async ({ actions }) => {
         context: {
           id: pokemonData.id,
           name: pokemonData.names.find((n) => n.language.name === 'en').name, // Default to English name
-          genus: genera,  // Store all genus translations
+          genus: genus,  // Store all genus translations
           descriptions,
           imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonData.id}.png`,
         },

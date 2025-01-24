@@ -4,22 +4,30 @@
     list-style: none;
     padding: 0;
 
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
     li {
         margin: 5px;
         padding: 10px 15px;
         border: 1px solid #ddd;
         border-radius: 5px;
         cursor: pointer;
-        color: #333;
         transition: all 0.3s ease;
 
         &:hover {
             background-color: #f0f0f0;
+
+            a {
+                color: blue;
+            }
         }
     }
 
     .active {
-        background-color: #007bff;
+        background-color: blue;
         color: white;
         font-weight: bold;
     }
@@ -28,4 +36,21 @@
         pointer-events: none;
         opacity: 0.5;
     }
+
+
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        li {
+            padding: 4px 8px;
+            font-size: 10px;
+        }
+
+        .pagination__previous,
+        .pagination__next {
+            font-size: 10px;
+            padding: 4px 8px;
+        }
+    }
+
 }

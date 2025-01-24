@@ -4,7 +4,7 @@ import en from './src/locales/en.json';
 import it from './src/locales/it.json';
 import fr from './src/locales/fr.json';
 import es from './src/locales/es.json';
-
+import './src/styles/global.scss';
 const messages = { en, it, fr, es };
 
 // Function to get the initial locale from browser or local storage
@@ -25,11 +25,11 @@ const LanguageProvider = ({ children }) => {
 
     return (
         <IntlProvider locale={locale} messages={messages[locale] || messages.en}>
-            <div style={{ textAlign: 'right', padding: '10px' }}>
-                <button onClick={() => setLocale('en')}>🇺🇸 English</button>
-                <button onClick={() => setLocale('it')}>🇮🇹 Italiano</button>
-                <button onClick={() => setLocale('fr')}>🇫🇷 Français</button>
-                <button onClick={() => setLocale('es')}>🇪🇸 Español</button>
+            <div className='multilanguageHeader'>
+                <button onClick={() => setLocale('en')}>🇺🇸</button>
+                <button onClick={() => setLocale('it')}>🇮🇹</button>
+                <button onClick={() => setLocale('fr')}>🇫🇷</button>
+                <button onClick={() => setLocale('es')}>🇪🇸</button>
             </div>
             {children}
         </IntlProvider>

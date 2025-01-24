@@ -1,10 +1,13 @@
 {
     "title": "Pokedex",
-    "searchPlaceholder": "Search Pokemon...",
-    "loading": "Loading Pokémon...",
-    "error": "Error fetching Pokémon data",
-    "noResults": "No Pokémon found",
-    "description": "Description",
+    "searchPlaceholder": "Search Pokémon...",
+    "loading": "Loading...",
+    "error": "Error",
+    "noResults": "No results found",
+    "id": "ID",
     "genus": "Genus",
-    "id": "ID"
+    "description": "Description",
+    "previous": "← Previous",
+    "next": "Next →",
+    "backToIndex": "Back to Index"
 }
